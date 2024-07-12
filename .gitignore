@@ -1,0 +1,17 @@
+# R files 
+.Rhistory
+.Rapp.history
+.RData
+.Rproj.user
+
+
+# R Environment Variables
+.Renviron
+
+# Files or folders
+.secrets/
+rsconnect/
+
+
+
+

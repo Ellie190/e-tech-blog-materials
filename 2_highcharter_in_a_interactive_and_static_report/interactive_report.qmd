@@ -1,0 +1,28 @@
+---
+title: "Measles Infected Cases"
+author: "E-tech Blog"
+date: "`r Sys.Date()`"
+format: html
+execute:
+  echo: false
+  warning: false
+---
+
+```{r}
+library(tidyverse) 
+library(highcharter)
+
+measles_infected_cases <- vaccines |> 
+  filter(state %in% c("Florida", "California")) |> 
+  mutate(count = ifelse(is.na(count), 0, count)) |> 
+  hchart("line", hcaes(x = year, y = count, group = state)) |> 
+  hc_xAxis(title = list(text = "Year")) |>  
+  hc_yAxis(title = list(text = "Number of cases per 100k people")) |>  
+  hc_title(text = list("Measles Infected Cases per 100k People 
+                       in Florida & California")) |> 
+  hc_colors(c("#dc3545", "#5c6f7e")) |> 
+  hc_exporting(enabled = TRUE) |> 
+  hc_add_theme(hc_theme(chart = list(backgroundColor = "white")))
+
+measles_infected_cases
+```

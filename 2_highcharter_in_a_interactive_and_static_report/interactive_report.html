@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="E-tech Blog">
+<meta name="dcterms.date" content="2024-02-17">
+
+<title>Measles Infected Cases</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="interactive_report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="interactive_report_files/libs/quarto-html/quarto.js"></script>
+<script src="interactive_report_files/libs/quarto-html/popper.min.js"></script>
+<script src="interactive_report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="interactive_report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="interactive_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="interactive_report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="interactive_report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="interactive_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="interactive_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="interactive_report_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="interactive_report_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="interactive_report_files/libs/proj4js-2.3.15/proj4.js"></script>
+<link href="interactive_report_files/libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="interactive_report_files/libs/highcharts-9.3.1/highcharts.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/highcharts-3d.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/highcharts-more.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/stock.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/map.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/data.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/exporting.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/offline-exporting.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/drilldown.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/item-series.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/annotations.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/export-data.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/funnel.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/heatmap.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/treemap.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/sankey.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/dependency-wheel.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/organization.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/solid-gauge.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/streamgraph.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/sunburst.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/vector.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/wordcloud.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/xrange.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/tilemap.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/venn.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/gantt.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/timeline.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/bullet.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/coloraxis.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/dumbbell.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/lollipop.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/series-label.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/plugins/motion.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/custom/reset.js"></script>
+<script src="interactive_report_files/libs/highcharts-9.3.1/modules/boost.js"></script>
+<script src="interactive_report_files/libs/highchart-binding-0.9.4/highchart.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Measles Infected Cases</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>E-tech Blog </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3cc6da7db64dde658224" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-3cc6da7db64dde658224">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":["Measles Infected Cases per 100k People \n                       in Florida & California"]},"yAxis":{"title":{"text":"Number of cases per 100k people"},"type":"linear"},"credits":{"enabled":false},"exporting":{"enabled":true},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"name":"California","data":[{"year":1928,"state":"California","count":69.22,"x":1928,"y":69.22},{"year":1929,"state":"California","count":72.8,"x":1929,"y":72.8},{"year":1930,"state":"California","count":760.24,"x":1930,"y":760.24},{"year":1931,"state":"California","count":477.48,"x":1931,"y":477.48},{"year":1932,"state":"California","count":214.08,"x":1932,"y":214.08},{"year":1933,"state":"California","count":445.28,"x":1933,"y":445.28},{"year":1934,"state":"California","count":423.26,"x":1934,"y":423.26},{"year":1935,"state":"California","count":466.38,"x":1935,"y":466.38},{"year":1936,"state":"California","count":773.54,"x":1936,"y":773.54},{"year":1937,"state":"California","count":78.26000000000001,"x":1937,"y":78.26000000000001},{"year":1938,"state":"California","count":278.32,"x":1938,"y":278.32},{"year":1939,"state":"California","count":939.48,"x":1939,"y":939.48},{"year":1940,"state":"California","count":376.44,"x":1940,"y":376.44},{"year":1941,"state":"California","count":174.42,"x":1941,"y":174.42},{"year":1942,"state":"California","count":1222.01,"x":1942,"y":1222.01},{"year":1943,"state":"California","count":340.06,"x":1943,"y":340.06},{"year":1944,"state":"California","count":599.97,"x":1944,"y":599.97},{"year":1945,"state":"California","count":339.44,"x":1945,"y":339.44},{"year":1946,"state":"California","count":575.16,"x":1946,"y":575.16},{"year":1947,"state":"California","count":74.98,"x":1947,"y":74.98},{"year":1948,"state":"California","count":487.91,"x":1948,"y":487.91},{"year":1949,"state":"California","count":320.82,"x":1949,"y":320.82},{"year":1950,"state":"California","count":137.92,"x":1950,"y":137.92},{"year":1951,"state":"California","count":548.36,"x":1951,"y":548.36},{"year":1952,"state":"California","count":335.25,"x":1952,"y":335.25},{"year":1953,"state":"California","count":438.91,"x":1953,"y":438.91},{"year":1954,"state":"California","count":473.05,"x":1954,"y":473.05},{"year":1955,"state":"California","count":513.46,"x":1955,"y":513.46},{"year":1956,"state":"California","count":235.21,"x":1956,"y":235.21},{"year":1957,"state":"California","count":353.35,"x":1957,"y":353.35},{"year":1958,"state":"California","count":235.72,"x":1958,"y":235.72},{"year":1959,"state":"California","count":251.82,"x":1959,"y":251.82},{"year":1960,"state":"California","count":140.03,"x":1960,"y":140.03},{"year":1961,"state":"California","count":223.42,"x":1961,"y":223.42},{"year":1962,"state":"California","count":164.86,"x":1962,"y":164.86},{"year":1963,"state":"California","count":113.36,"x":1963,"y":113.36},{"year":1964,"state":"California","count":179.9,"x":1964,"y":179.9},{"year":1965,"state":"California","count":74.59999999999999,"x":1965,"y":74.59999999999999},{"year":1966,"state":"California","count":80.59,"x":1966,"y":80.59},{"year":1967,"state":"California","count":27.45,"x":1967,"y":27.45},{"year":1968,"state":"California","count":8.49,"x":1968,"y":8.49},{"year":1969,"state":"California","count":4.57,"x":1969,"y":4.57},{"year":1970,"state":"California","count":9.550000000000001,"x":1970,"y":9.550000000000001},{"year":1971,"state":"California","count":13.88,"x":1971,"y":13.88},{"year":1972,"state":"California","count":15.43,"x":1972,"y":15.43},{"year":1973,"state":"California","count":3.82,"x":1973,"y":3.82},{"year":1974,"state":"California","count":5.14,"x":1974,"y":5.14},{"year":1975,"state":"California","count":23.78,"x":1975,"y":23.78},{"year":1976,"state":"California","count":10.41,"x":1976,"y":10.41},{"year":1977,"state":"California","count":34.75,"x":1977,"y":34.75},{"year":1978,"state":"California","count":2.81,"x":1978,"y":2.81},{"year":1979,"state":"California","count":4.08,"x":1979,"y":4.08},{"year":1980,"state":"California","count":3.65,"x":1980,"y":3.65},{"year":1981,"state":"California","count":1.4,"x":1981,"y":1.4},{"year":1982,"state":"California","count":3.16,"x":1982,"y":3.16},{"year":1983,"state":"California","count":0.59,"x":1983,"y":0.59},{"year":1984,"state":"California","count":1.2,"x":1984,"y":1.2},{"year":1985,"state":"California","count":0.92,"x":1985,"y":0.92},{"year":1986,"state":"California","count":1.52,"x":1986,"y":1.52},{"year":1987,"state":"California","count":2.68,"x":1987,"y":2.68},{"year":1988,"state":"California","count":2.48,"x":1988,"y":2.48},{"year":1989,"state":"California","count":7.34,"x":1989,"y":7.34},{"year":1990,"state":"California","count":31.99,"x":1990,"y":31.99},{"year":1991,"state":"California","count":6.49,"x":1991,"y":6.49},{"year":1992,"state":"California","count":0.19,"x":1992,"y":0.19},{"year":1993,"state":"California","count":0.18,"x":1993,"y":0.18},{"year":1994,"state":"California","count":0.19,"x":1994,"y":0.19},{"year":1995,"state":"California","count":0.09,"x":1995,"y":0.09},{"year":1996,"state":"California","count":0.11,"x":1996,"y":0.11},{"year":1997,"state":"California","count":0.09,"x":1997,"y":0.09},{"year":1998,"state":"California","count":0,"x":1998,"y":0},{"year":1999,"state":"California","count":0.06,"x":1999,"y":0.06},{"year":2000,"state":"California","count":0.03,"x":2000,"y":0.03},{"year":2001,"state":"California","count":0.11,"x":2001,"y":0.11},{"year":2002,"state":"California","count":0,"x":2002,"y":0},{"year":2003,"state":"California","count":0,"x":2003,"y":0}],"type":"line"},{"name":"Florida","data":[{"year":1928,"state":"Florida","count":119.58,"x":1928,"y":119.58},{"year":1929,"state":"Florida","count":78.01000000000001,"x":1929,"y":78.01000000000001},{"year":1930,"state":"Florida","count":356.59,"x":1930,"y":356.59},{"year":1931,"state":"Florida","count":260.79,"x":1931,"y":260.79},{"year":1932,"state":"Florida","count":13.63,"x":1932,"y":13.63},{"year":1933,"state":"Florida","count":63.93,"x":1933,"y":63.93},{"year":1934,"state":"Florida","count":505.65,"x":1934,"y":505.65},{"year":1935,"state":"Florida","count":72.77,"x":1935,"y":72.77},{"year":1936,"state":"Florida","count":18.22,"x":1936,"y":18.22},{"year":1937,"state":"Florida","count":23.08,"x":1937,"y":23.08},{"year":1938,"state":"Florida","count":517.83,"x":1938,"y":517.83},{"year":1939,"state":"Florida","count":157.53,"x":1939,"y":157.53},{"year":1940,"state":"Florida","count":114.19,"x":1940,"y":114.19},{"year":1941,"state":"Florida","count":459.76,"x":1941,"y":459.76},{"year":1942,"state":"Florida","count":189.61,"x":1942,"y":189.61},{"year":1943,"state":"Florida","count":68.56999999999999,"x":1943,"y":68.56999999999999},{"year":1944,"state":"Florida","count":189.74,"x":1944,"y":189.74},{"year":1945,"state":"Florida","count":39.63,"x":1945,"y":39.63},{"year":1946,"state":"Florida","count":116.89,"x":1946,"y":116.89},{"year":1947,"state":"Florida","count":53.1,"x":1947,"y":53.1},{"year":1948,"state":"Florida","count":152.39,"x":1948,"y":152.39},{"year":1949,"state":"Florida","count":144.03,"x":1949,"y":144.03},{"year":1950,"state":"Florida","count":83.43000000000001,"x":1950,"y":83.43000000000001},{"year":1951,"state":"Florida","count":76.21000000000001,"x":1951,"y":76.21000000000001},{"year":1952,"state":"Florida","count":109.99,"x":1952,"y":109.99},{"year":1953,"state":"Florida","count":38.5,"x":1953,"y":38.5},{"year":1954,"state":"Florida","count":312.27,"x":1954,"y":312.27},{"year":1955,"state":"Florida","count":38.04,"x":1955,"y":38.04},{"year":1956,"state":"Florida","count":127.23,"x":1956,"y":127.23},{"year":1957,"state":"Florida","count":120.36,"x":1957,"y":120.36},{"year":1958,"state":"Florida","count":266.67,"x":1958,"y":266.67},{"year":1959,"state":"Florida","count":74.68000000000001,"x":1959,"y":74.68000000000001},{"year":1960,"state":"Florida","count":74.45999999999999,"x":1960,"y":74.45999999999999},{"year":1961,"state":"Florida","count":127.69,"x":1961,"y":127.69},{"year":1962,"state":"Florida","count":76.09,"x":1962,"y":76.09},{"year":1963,"state":"Florida","count":66.69,"x":1963,"y":66.69},{"year":1964,"state":"Florida","count":121.55,"x":1964,"y":121.55},{"year":1965,"state":"Florida","count":62.29,"x":1965,"y":62.29},{"year":1966,"state":"Florida","count":64.38,"x":1966,"y":64.38},{"year":1967,"state":"Florida","count":28.92,"x":1967,"y":28.92},{"year":1968,"state":"Florida","count":8.94,"x":1968,"y":8.94},{"year":1969,"state":"Florida","count":9.27,"x":1969,"y":9.27},{"year":1970,"state":"Florida","count":20.19,"x":1970,"y":20.19},{"year":1971,"state":"Florida","count":30.83,"x":1971,"y":30.83},{"year":1972,"state":"Florida","count":17.64,"x":1972,"y":17.64},{"year":1973,"state":"Florida","count":4.7,"x":1973,"y":4.7},{"year":1974,"state":"Florida","count":2.7,"x":1974,"y":2.7},{"year":1975,"state":"Florida","count":0.9400000000000001,"x":1975,"y":0.9400000000000001},{"year":1976,"state":"Florida","count":3.78,"x":1976,"y":3.78},{"year":1977,"state":"Florida","count":3.3,"x":1977,"y":3.3},{"year":1978,"state":"Florida","count":11.6,"x":1978,"y":11.6},{"year":1979,"state":"Florida","count":6.2,"x":1979,"y":6.2},{"year":1980,"state":"Florida","count":4.04,"x":1980,"y":4.04},{"year":1981,"state":"Florida","count":2.89,"x":1981,"y":2.89},{"year":1982,"state":"Florida","count":2.01,"x":1982,"y":2.01},{"year":1983,"state":"Florida","count":1.48,"x":1983,"y":1.48},{"year":1984,"state":"Florida","count":0.16,"x":1984,"y":0.16},{"year":1985,"state":"Florida","count":0.9900000000000001,"x":1985,"y":0.9900000000000001},{"year":1986,"state":"Florida","count":3.38,"x":1986,"y":3.38},{"year":1987,"state":"Florida","count":0.72,"x":1987,"y":0.72},{"year":1988,"state":"Florida","count":1.32,"x":1988,"y":1.32},{"year":1989,"state":"Florida","count":1.6,"x":1989,"y":1.6},{"year":1990,"state":"Florida","count":2.87,"x":1990,"y":2.87},{"year":1991,"state":"Florida","count":2.21,"x":1991,"y":2.21},{"year":1992,"state":"Florida","count":0.3,"x":1992,"y":0.3},{"year":1993,"state":"Florida","count":0.2,"x":1993,"y":0.2},{"year":1994,"state":"Florida","count":0.16,"x":1994,"y":0.16},{"year":1995,"state":"Florida","count":0.06,"x":1995,"y":0.06},{"year":1996,"state":"Florida","count":0,"x":1996,"y":0},{"year":1997,"state":"Florida","count":0.06,"x":1997,"y":0.06},{"year":1998,"state":"Florida","count":0.01,"x":1998,"y":0.01},{"year":1999,"state":"Florida","count":0.01,"x":1999,"y":0.01},{"year":2000,"state":"Florida","count":0.02,"x":2000,"y":0.02},{"year":2001,"state":"Florida","count":0,"x":2001,"y":0},{"year":2002,"state":"Florida","count":0.01,"x":2002,"y":0.01},{"year":2003,"state":"Florida","count":0,"x":2003,"y":0}],"type":"line"}],"xAxis":{"type":"linear","title":{"text":"Year"}},"colors":["#dc3545","#5c6f7e"]},"theme":{"chart":{"backgroundColor":"white"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
