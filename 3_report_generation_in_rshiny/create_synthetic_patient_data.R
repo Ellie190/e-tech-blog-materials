@@ -34,7 +34,7 @@ admission_times <- format(strptime(sprintf("%02d:%02d", sample(0:23, num_visits,
                                            sample(0:59, num_visits, replace = TRUE)), 
                                    format="%H:%M"), "%H:%M")
 
-# Generate Treatment Costs in South African Rands
+# Generate Treatment Costs
 treatment_costs <- round(runif(num_visits, min = 500, max = 100000), 2)
 
 # Generate Hospital Names
@@ -56,21 +56,21 @@ diagnoses <- sample(c('Hypertension', 'Diabetes Mellitus Type 2', 'Chronic Obstr
 
 # Create the data frame
 patient_data <- data.frame(
-  Patient_ID = patient_ids,
-  Age = patient_ages,
-  Gender = patient_genders,
-  Admission_Date = admission_dates,
-  Admission_Time = admission_times,
-  Discharge_Date = discharge_dates,
-  Treatment_Cost = treatment_costs,
-  Length_of_Stay = length_of_stay,
-  Hospital = hospitals,
-  Diagnosis = diagnoses
+  patient_id = patient_ids,
+  age = patient_ages,
+  gender = patient_genders,
+  admission_date = admission_dates,
+  admission_time = admission_times,
+  discharge_date = discharge_dates,
+  treatment_cost = treatment_costs,
+  length_of_stay = length_of_stay,
+  hospital = hospitals,
+  diagnosis = diagnoses
 )
 
 # Ensure discharge dates are not before admission dates
 patient_data <- patient_data |> 
-  mutate(Discharge_Date = if_else(Discharge_Date < Admission_Date, Admission_Date, Discharge_Date))
+  mutate(discharge_date = if_else(discharge_date < admission_date, admission_date, discharge_date))
 
 # Save to CSV
 write.csv(patient_data, "patient_data.csv", row.names = FALSE)

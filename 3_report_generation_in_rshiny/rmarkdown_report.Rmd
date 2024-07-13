@@ -1,0 +1,279 @@
+---
+title: |
+  ![](logo.jpg){width=2.2in}  
+  Patient Admission Report
+author: "Eli-tech Blog Solutions"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: flatly
+params:
+  admission_date: !r c(format(Sys.Date(), "%Y-01-01"), as.character(Sys.Date()))
+  hospital: !r c("Eltech Medical Center", "Bayestry Hosipital", "Anival Health Clinic")
+---
+
+<style type="text/css">
+
+h1.title {
+  text-align: center;
+}
+h4.author { /* Header 4 - and the author and data headers use this too  */
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  text-align: center;
+}
+</style>
+ 
+ <style type="text/css">
+ .main-container {
+   max-width: 65% !important;
+   margin: auto;
+ }
+ </style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = FALSE, 
+  message = FALSE, 
+  warning = FALSE,
+  fig.width = 10,
+  fig.height = 3.75,
+  comment = NA
+)
+
+# Libraries 
+library(tidyverse)
+library(highcharter)
+library(gt)
+
+# Functions 
+
+# Function to to get the most common value
+get_mode <- function(x) {
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+
+# Function to convert hours to AM/PM format
+convert_to_ampm <- function(hours) {
+  # Convert hours to POSIXct time object
+  time_obj <- strptime(sprintf("%d", hours), format = "%H")
+  # Format time object in AM/PM format
+  formatted_time <- format(time_obj, "%I %p")
+  
+  return(formatted_time)
+}
+
+# Function to add space between big numbers
+format_number_with_space <- function(number) {
+  formatted_number <- format(number, big.mark = " ")
+  return(formatted_number)
+}
+
+# Function to convert dates in the format day month year
+convert_date <- function(date) {
+  formatted_date <- format(as.Date(date), "%d %B %Y")
+  return(formatted_date)
+}
+
+```
+
+```{r}
+# Read patient data and filter admission date and hospital 
+patient_data <- read_csv("patient_data.csv") |> 
+  filter(admission_date >= params$admission_date[1] & 
+           admission_date >= params$admission_date[1] & 
+           hospital %in% params$hospital) |> 
+  mutate(admission_hour = hour(admission_time),
+         admission_weekday = weekdays(admission_date)) |> 
+  mutate(admission_weekday = factor(admission_weekday,
+                                    levels = c("Monday", "Tuesday",
+                                               "Wednesday", "Thursday",
+                                               "Friday", "Saturday", "Sunday"),
+                                    ordered = TRUE),
+         admission_hour = factor(admission_hour, levels = c(0:23),
+                                 ordered = TRUE))
+```
+
+### Report Information
+
+```{r}
+# Dat filter and Metrics 
+report_admission_date_range <- paste(convert_date(params$admission_date[1]), "to",
+                                     convert_date(params$admission_date[2]))
+
+report_hospital <- paste(params$hospital, sep = ",")
+
+number_of_admissions <- format_number_with_space(nrow(patient_data))
+
+total_treatment_cost <- paste("R", format_number_with_space(sum(patient_data$treatment_cost)))
+
+unique_number_of_patients_treated <- format_number_with_space(length(unique(patient_data$patient_id)))
+
+average_stay_length <- paste(format_number_with_space(round(mean(patient_data$length_of_stay), 0)), "days")
+
+most_common_admission_hour <- convert_to_ampm(get_mode(patient_data$admission_hour))
+
+```
+This report displays patient admission information from **`r report_admission_date_range`** for `r report_hospital`.
+
+```{r}
+# A table to display data metrics
+admissions_information <- data.frame(Metric = c("Number of admissions",
+                                                     "Unique number of patients treated",
+                                                     "Average stay length",
+                                                     "Hour of day when patients are mostly admitted",
+                                                     "Total treatment cost"),
+                                     Result = c(number_of_admissions,
+                                               unique_number_of_patients_treated,
+                                               average_stay_length,
+                                               most_common_admission_hour,
+                                               total_treatment_cost))
+
+admissions_information |> 
+  gt() |> 
+  tab_header(title = "Admissions Information")
+```
+
+### Top 5 diagnoses by number of admissions
+```{r}
+top_5_diagnosis_by_admission <- patient_data |> 
+  group_by(diagnosis) |> 
+  summarise(admissions = n()) |> 
+  arrange(desc(admissions)) |> 
+  head(5)
+
+# What patients were mostly admitted for
+top_diagnosis_by_admission <- top_5_diagnosis_by_admission |> 
+  select(diagnosis) |> 
+  slice(1) |> 
+  pull()
+```
+
+- Most patients were admitted for **`r top_diagnosis_by_admission`**.
+```{r}
+# Plot top 5 diagnosis by admissions
+top_5_diagnosis_by_admission |>  
+  hchart("bar", hcaes(x = diagnosis, y = admissions),
+         color = "#005383",
+         dataLabels = list(enabled = TRUE, format = "{y}"),
+         name = "Admissions") %>% 
+  hc_title(text = NULL) %>% 
+  hc_xAxis(title = list(text = "Diagnosis")) %>% 
+  hc_yAxis(title = list(text = "Admissions"),
+           labels = list(format = "{value}")) %>% 
+  hc_exporting(enabled = TRUE) %>% 
+  hc_add_theme(
+    hc_theme(chart = list(
+      backgroundColor = "white")))
+```
+
+### Patient admission trends
+```{r}
+patient_admission_trend <- patient_data |> 
+  group_by(admission_date) |> 
+  summarise(admissions = n()) |> 
+  arrange(admission_date)
+
+# Dates with the highest number of patient admissions
+dates_with_most_admissions <- patient_admission_trend |> 
+  arrange(desc(admissions)) |> 
+  select(admission_date) |> 
+  head(3) |> 
+  arrange(admission_date) |> 
+  pull()
+
+# Dates with the lowest number of patient admissions
+dates_with_least_admissions <- patient_admission_trend |> 
+  arrange(admissions) |> 
+  select(admission_date) |> 
+  head(3) |> 
+  arrange(admission_date) |> 
+  pull()
+
+# Combine admission dates with a comma separator 
+dates_with_most_admissions <- paste(convert_date(dates_with_most_admissions), collapse = ", ")
+dates_with_least_admissions <- paste(convert_date(dates_with_least_admissions), collapse = ", ")
+```
+- Dates with the highest number of patient admissions: **`r dates_with_most_admissions`**.
+- Dates with the lowest number of patient admissions: **`r dates_with_least_admissions`**.
+
+```{r}
+# plot patient admission trend
+patient_admission_trend |> 
+  hchart("line", hcaes(x = admission_date, y = admissions),
+         color = "#005383",
+         name = "Admissions") |> 
+  hc_xAxis(title = list(text = "Date")) |>  
+  hc_yAxis(title = list(text = "Admissions")) |>  
+  hc_exporting(enabled = TRUE) |> 
+  hc_add_theme(hc_theme(chart = list(backgroundColor = "white")))
+```
+
+### Hourly patient admissions across the week
+```{r}
+patient_admission_by_weekday_and_hour <- patient_data |> 
+  group_by(admission_weekday, admission_hour) |> 
+  summarise(admissions = n()) |> 
+  mutate(admission_hour = convert_to_ampm(admission_hour))
+
+# weekday and day hour with the highest number of admissions
+weekday_hour_with_highest_admissions <- patient_admission_by_weekday_and_hour |> 
+  arrange(desc(admissions)) |> 
+  mutate(admission_weekday_day_hour = paste(admission_weekday, admission_hour)) |> 
+  ungroup() |> 
+  select(admission_weekday_day_hour) |> 
+  head(3) |> 
+  pull()
+
+
+# weekday and day hour with the lowest number of admissions
+weekday_hour_with_lowest_admissions <- patient_admission_by_weekday_and_hour |> 
+  arrange(admissions) |> 
+  mutate(admission_weekday_day_hour = paste(admission_weekday, admission_hour)) |> 
+  ungroup() |> 
+  select(admission_weekday_day_hour) |> 
+  head(3) |> 
+  pull()
+
+weekday_hour_with_highest_admissions <- paste(weekday_hour_with_highest_admissions, collapse = ", ")
+weekday_hour_with_lowest_admissions <- paste(weekday_hour_with_lowest_admissions, collapse = ", ")
+  
+```
+- Weekday and day hours with the highest number of patient admissions: **`r weekday_hour_with_highest_admissions`**
+- Weekday and day hours with the lowest number of patient admissions: **`r weekday_hour_with_lowest_admissions`**
+
+```{r, fig.height=4}
+# Sort weekdays and day hours for the heatmap
+patient_admission_by_weekday_and_hour <- patient_admission_by_weekday_and_hour |> 
+  mutate(admission_hour = factor(admission_hour,
+                                 levels = c("12 am", "01 am", "02 am", "03 am",
+                                            "04 am", "05 am", "06 am", "07 am",
+                                            "08 am", "09 am", "10 am", "11 am",
+                                            "12 pm", "01 pm", "02 pm", "03 pm",
+                                            "04 pm", "05 pm", "06 pm", "07 pm",
+                                            "08 pm", "09 pm", "10 pm", "11 pm"),
+                                 ordered = TRUE),
+         admission_weekday = factor(admission_weekday,
+                                    levels = c("Sunday", "Saturday", "Friday",
+                                               "Thursday", "Wednesday", "Tuesday", "Monday"),
+                                    ordered = TRUE)) 
+
+# Plot patient admissions by weekday and hour of day
+patient_admission_by_weekday_and_hour |> 
+  hchart("heatmap", hcaes(x = admission_hour, y = admission_weekday, value = admissions),
+         name = "admissions",
+         dataLabels = list(enabled = TRUE, format = "{point.admissions}")) |> 
+  hc_xAxis(title = list(text = "hour")) |>  
+  hc_yAxis(title = list(text = "Weekday")) |>  
+  hc_exporting(enabled = TRUE) |> 
+  hc_add_theme(hc_theme(chart = list(backgroundColor = "white")))
+  
+
+```
+
+
+
+
+

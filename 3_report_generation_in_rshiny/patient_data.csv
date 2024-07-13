@@ -1,4 +1,4 @@
-"Patient_ID","Age","Gender","Admission_Date","Admission_Time","Discharge_Date","Treatment_Cost","Length_of_Stay","Hospital","Diagnosis"
+"patient_id","age","gender","admission_date","admission_time","discharge_date","treatment_cost","length_of_stay","hospital","diagnosis"
 2463,73,"Male",2023-01-10,"23:33",2023-01-29,70392.24,19,"Bayestry Hosipital","Hypothyroidism"
 2511,90,"Female",2023-10-20,"02:06",2023-11-01,99703.04,12,"Anival Health Clinic","Migraine"
 2227,80,"Male",2022-08-16,"19:52",2022-09-02,87785.35,17,"Eltech Medical Center","Psoriasis"
