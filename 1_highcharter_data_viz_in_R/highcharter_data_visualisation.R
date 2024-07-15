@@ -204,6 +204,9 @@ vaccines |>
 
 
 # Stock line chart
+globaltemp_xts <- xts(x = globaltemp$lower,
+                      order.by = globaltemp$date)
+                      
 highchart(type = "stock") |> 
   hc_add_series(globaltemp_xts,
                 type = "line",

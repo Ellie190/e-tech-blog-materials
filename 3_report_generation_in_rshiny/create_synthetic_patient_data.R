@@ -45,7 +45,7 @@ hospitals <- sample(c('Eltech Medical Center', 'Bayestry Hosipital', 'Anival Hea
                     num_visits, replace = TRUE, 
                     prob = c(0.6, 0.3, 0.1))
 
-# Generate Diagnoses
+# Generate Diagnoses - Admission is assumed for all these diagnoses
 diagnoses <- sample(c('Hypertension', 'Diabetes Mellitus Type 2', 'Chronic Obstructive Pulmonary Disease',
                       'Acute Myocardial Infarction', 'Asthma', 'Gastroesophageal Reflux Disease', 
                       'Major Depressive Disorder', 'Generalized Anxiety Disorder', 'Osteoarthritis',

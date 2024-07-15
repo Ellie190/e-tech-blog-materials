@@ -57,13 +57,14 @@ get_mode <- function(x) {
 
 # Function to convert hours to AM/PM format
 convert_to_ampm <- function(hours) {
-  # Convert hours to POSIXct time object
-  time_obj <- strptime(sprintf("%d", hours), format = "%H")
-  # Format time object in AM/PM format
-  formatted_time <- format(time_obj, "%I %p")
-  
-  return(formatted_time)
-}
+    # 1. Convert hours to POSIXct time object
+    # 2. Format time object in AM/PM format
+    
+    time_obj <- strptime(sprintf("%d", hours), format = "%H")
+    formatted_time <- format(time_obj, "%I %p")
+    
+    return(formatted_time)
+  }
 
 # Function to add space between big numbers
 format_number_with_space <- function(number) {
@@ -83,17 +84,17 @@ convert_date <- function(date) {
 # Read patient data and filter admission date and hospital 
 patient_data <- read_csv("patient_data.csv") |> 
   filter(admission_date >= params$admission_date[1] & 
-           admission_date >= params$admission_date[1] & 
+           admission_date <= params$admission_date[2] & 
            hospital %in% params$hospital) |> 
-  mutate(admission_hour = hour(admission_time),
-         admission_weekday = weekdays(admission_date)) |> 
-  mutate(admission_weekday = factor(admission_weekday,
-                                    levels = c("Monday", "Tuesday",
-                                               "Wednesday", "Thursday",
-                                               "Friday", "Saturday", "Sunday"),
-                                    ordered = TRUE),
-         admission_hour = factor(admission_hour, levels = c(0:23),
-                                 ordered = TRUE))
+  mutate(
+        admission_hour = hour(admission_time),
+        admission_weekday = weekdays(admission_date),
+        admission_weekday = factor(admission_weekday,
+                                   levels = c("Monday", "Tuesday", "Wednesday", 
+                                              "Thursday", "Friday", "Saturday", "Sunday"),
+                                   ordered = TRUE),
+        admission_hour = factor(admission_hour, levels = 0:23, ordered = TRUE)
+      )
 ```
 
 ### Report Information
@@ -107,13 +108,15 @@ report_hospital <- paste(params$hospital, sep = ",")
 
 number_of_admissions <- format_number_with_space(nrow(patient_data))
 
-total_treatment_cost <- paste("R", format_number_with_space(sum(patient_data$treatment_cost)))
-
 unique_number_of_patients_treated <- format_number_with_space(length(unique(patient_data$patient_id)))
+
+average_daily_admissions <- format_number_with_space(round(mean(table(patient_data$admission_date)),0))
 
 average_stay_length <- paste(format_number_with_space(round(mean(patient_data$length_of_stay), 0)), "days")
 
 most_common_admission_hour <- convert_to_ampm(get_mode(patient_data$admission_hour))
+
+total_treatment_cost <- paste("R", format_number_with_space(sum(patient_data$treatment_cost)))
 
 ```
 This report displays patient admission information from **`r report_admission_date_range`** for `r report_hospital`.
@@ -121,15 +124,17 @@ This report displays patient admission information from **`r report_admission_da
 ```{r}
 # A table to display data metrics
 admissions_information <- data.frame(Metric = c("Number of admissions",
-                                                     "Unique number of patients treated",
-                                                     "Average stay length",
-                                                     "Hour of day when patients are mostly admitted",
-                                                     "Total treatment cost"),
+                                                "Unique number of patients treated",
+                                                "Average number of patients admitted daily",
+                                                "Average stay length",
+                                                "Hour of day when patients are mostly admitted",
+                                                "Total treatment cost"),
                                      Result = c(number_of_admissions,
-                                               unique_number_of_patients_treated,
-                                               average_stay_length,
-                                               most_common_admission_hour,
-                                               total_treatment_cost))
+                                                unique_number_of_patients_treated,
+                                                average_daily_admissions,
+                                                average_stay_length,
+                                                most_common_admission_hour,
+                                                total_treatment_cost))
 
 admissions_information |> 
   gt() |> 
@@ -169,7 +174,7 @@ top_5_diagnosis_by_admission |>
       backgroundColor = "white")))
 ```
 
-### Patient admission trends
+### Daily patient admissions
 ```{r}
 patient_admission_trend <- patient_data |> 
   group_by(admission_date) |> 
