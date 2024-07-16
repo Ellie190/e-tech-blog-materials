@@ -93,6 +93,9 @@ server <- function(input, output, session) {
       label = NULL,
       value = c(min(date_choices), max(date_choices)),
       range = TRUE,
+      update_on = "close",
+      autoClose = TRUE,
+      toggleSelected = FALSE,
       separator = " - ",
       minDate = min(date_choices),
       maxDate = max(date_choices),
@@ -170,6 +173,9 @@ server <- function(input, output, session) {
   
   # Top 5 diagnoses by number of admissions
   output$top_5_diagnosis_by_admission <- renderHighchart({
+    # Ensure the data has at least one row
+    req(nrow(patient_data()) > 0)
+    
     patient_data() |> 
       group_by(diagnosis) |> 
       summarise(admissions = n()) |> 
@@ -213,6 +219,9 @@ server <- function(input, output, session) {
   
   # Hourly patient admissions across the week
   output$patient_admission_by_weekday_and_hour <- renderHighchart({
+    # Ensure the data has at least one row
+    req(nrow(patient_data()) > 0)
+    
     patient_admission_by_weekday_and_hour <- patient_data() |> 
       group_by(admission_weekday, admission_hour) |> 
       summarise(admissions = n()) |> 
